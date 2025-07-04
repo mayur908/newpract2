@@ -5,24 +5,24 @@ push:
  jobs: mysqljob:
  runs-on: ubuntu-latest
  services:
-mysql:
+ mysql:
  image: mysql:5.7
-env:
+ env:
  MYSQL_ROOT_PASSWORD: root
-ports: - 3306:3306
+ ports: - 3306:3306
  options: >-
  --health-cmd="mysqladmin ping --silent"
  --health-interval=10s
  --health-timeout=5s
  --health-retries=3
  steps:
-- name: Checkout code
+ - name: Checkout code
  uses: actions/checkout@v3
-- name: Wait for MySQL to be ready
-- run: |
+ - name: Wait for MySQL to be ready
+ - run: |
  sleep 20
  echo "MySQL should be ready now."
-- name: Run SQL commands
+ - name: Run SQL commands
  run: |
  sudo apt-get install -y mysql-client
  mysql -h 127.0.0.1 -P 3306 -u root -proot < create_tables.sql
